@@ -1,6 +1,25 @@
 import Link from 'next/link';
 
 export default function Home() {
+  const funcionalidades = [
+    {
+      titulo: 'Registro Simples',
+      descricao: 'Interface intuitiva para cadastrar dados de chuva de forma rápida e eficiente.',
+    },
+    {
+      titulo: 'Análises Visuais',
+      descricao: 'Gráficos e dashboards para visualizar padrões e tendências pluviométricas.',
+    },
+    {
+      titulo: 'Acesso Mobile',
+      descricao: 'Plataforma responsiva que funciona perfeitamente em dispositivos móveis.',
+    },
+    {
+      titulo: 'Dados Abertos',
+      descricao: 'Informações democráticas e acessíveis para toda a comunidade.',
+    },
+  ];
+
   return (
     <main className="bg-gradient-to-b from-[#1740a0] to-[#0B1120] min-h-screen">
       <div className="max-w-7xl mx-auto px-6 py-20 text-center">
@@ -32,19 +51,17 @@ export default function Home() {
             Funcionalidades Principais
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            {['Registro Simples', 'Análises Visuais', 'Acesso Mobile', 'Dados Abertos'].map(
-              (item) => (
-                <div
-                  key={item}
-                  className="bg-slate-800 rounded-lg p-6 border border-slate-700"
-                >
-                  <h3 className="font-semibold text-lg mb-2">{item}</h3>
-                  <p className="text-sm text-slate-400">
-                    Descrição breve sobre {item.toLowerCase()}.
-                  </p>
-                </div>
-              )
-            )}
+            {funcionalidades.map((item) => (
+              <div
+                key={item.titulo}
+                className="bg-slate-800 rounded-lg p-6 border border-slate-700 transition-transform transform hover:scale-105 hover:shadow-lg hover:border-blue-500"
+              >
+                <h3 className="font-semibold text-lg mb-2">{item.titulo}</h3>
+                <p className="text-sm text-slate-400">
+                  {item.descricao}
+                </p>
+              </div>
+            ))}
           </div>
 
           <div className="flex flex-col md:flex-row gap-6 items-center mb-16">

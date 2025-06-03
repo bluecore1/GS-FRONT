@@ -10,7 +10,7 @@ export const Header = () => {
     { name: 'Início', href: '/' },
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Registrar', href: '/registrar' },
-    { name: 'Histórico', href: '/historico' },
+    { name: 'Integrantes', href: '/Integrantes' },
   ];
 
   return (
