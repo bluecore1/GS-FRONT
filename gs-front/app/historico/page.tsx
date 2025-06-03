@@ -1,23 +1,12 @@
-
-
-export default function History() {
-  const records = [
-    { date: '2024-06-01', location: 'São Paulo', volume: 12, observations: 'Chuva moderada' },
-    { date: '2024-06-02', location: 'Campinas', volume: 8, observations: 'Chuva leve' },
-  ]
-
+export default function Historico() {
   return (
-    
-      <div className="p-8">
-        <h1 className="text-3xl font-bold text-white mb-6">Histórico de Registros</h1>
-        <ul className="space-y-4">
-          {records.map((r, i) => (
-            <li key={i} className="bg-slate-700 p-4 rounded text-white">
-              {r.date} - {r.location}: {r.volume}mm ({r.observations})
-            </li>
-          ))}
-        </ul>
+    <main className="bg-gradient-to-b from-[#1740a0] to-[#0B1120] min-h-screen p-6">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-3xl font-bold mb-4">Histórico de Registros</h1>
+        <p className="text-slate-400">
+          Esta página está em desenvolvimento para exibir registros antigos.
+        </p>
       </div>
-    
-  )
+    </main>
+  );
 }

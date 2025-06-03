@@ -1,23 +1,25 @@
-import './globals.css'
-import { ReactNode } from 'react'
-import { Navigation } from '@/components/Navigation'
+import './globals.css';
+import { Inter } from 'next/font/google';
+import { Header } from '@/components/Header';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Cadastro de Chuva',
-  description: 'Aplicação para controle de registros de chuva',
-}
+  title: 'Cadastro da Chuva',
+  description: 'Sistema de dados pluviométricos',
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="pt">
-      <body className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-        <Navigation />
-        <main>{children}</main>
+    <html lang="pt-br">
+      <body className={`${inter.className} bg-[#0F172A] text-white`}>
+        <Header />
+        {children}
       </body>
     </html>
-  )
+  );
 }
