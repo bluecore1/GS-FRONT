@@ -11,6 +11,7 @@ export const Header = () => {
     { name: 'Dashboard', href: '/dashboard' },
     { name: 'Registrar', href: '/registrar' },
     { name: 'Integrantes', href: '/Integrantes' },
+    { name: 'Ajuda', href: '/ajuda' },
   ];
 
   return (
