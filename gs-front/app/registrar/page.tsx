@@ -1,41 +1,60 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState } from 'react'
+import Link from 'next/link'
 
 export default function Registrar() {
-  const [data, setData] = useState('');
-  const [local, setLocal] = useState('');
-  const [volume, setVolume] = useState('');
-  const [observacoes, setObservacoes] = useState('');
-  const [erro, setErro] = useState('');
-  const [sucesso, setSucesso] = useState('');
+  const [data, setData] = useState('')
+  const [local, setLocal] = useState('')
+  const [volume, setVolume] = useState('')
+  const [observacoes, setObservacoes] = useState('')
+  const [erro, setErro] = useState('')
+  const [sucesso, setSucesso] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (!data || !local || !volume) {
-      setErro('Preencha todos os campos obrigatórios.');
-      setSucesso('');
-      return;
-    }
+  if (!data || !local || !volume) {
+    setErro('Preencha todos os campos obrigatórios.');
+    setSucesso('');
+    return;
+  }
 
-    // Envio dos dados para API futuramente
-    setErro('');
+  try {
+    const res = await fetch('https://controlechuva-production.up.railway.app/api/registros-chuva', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        data_ocorrencia: data,
+        local,
+        volume_mm: parseFloat(volume),
+        observacoes,
+        usuario_id: 1
+      })
+    });
+
+    if (!res.ok) throw new Error('Erro ao salvar');
+
     setSucesso('Registro salvo com sucesso!');
+    setErro('');
     setData('');
     setLocal('');
     setVolume('');
     setObservacoes('');
-  };
+  } 
+  catch {
+  setErro('Erro ao registrar. Tente novamente.');
+  setSucesso('');
+}
+  }
+
 
   return (
     <main className="bg-gradient-to-b from-[#1740a0] to-[#0B1120] min-h-screen p-6">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-4">Registrar Dados de Chuva</h1>
         <p className="text-slate-400 mb-6">
-          Contribua com dados precisos para nossa base pluviométrica. Suas
-          informações ajudam toda a comunidade.
+          Contribua com dados precisos para nossa base pluviométrica.
         </p>
 
         {erro && <p className="bg-red-700 text-white p-3 rounded mb-4">{erro}</p>}
@@ -103,27 +122,7 @@ export default function Registrar() {
             </Link>
           </div>
         </form>
-
-        {/* Seção de Dicas — MANTIDA */}
-        <div className="bg-slate-800 p-6 rounded-lg border border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="font-semibold mb-2">💡 Dicas para um bom registro</h3>
-            <ul className="list-disc ml-5 text-slate-300">
-              <li>Use endereços específicos quando possível</li>
-              <li>Coordenadas GPS são bem-vindas</li>
-              <li>Inclua cidade e estado</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-2">📏 Medição</h3>
-            <ul className="list-disc ml-5 text-slate-300">
-              <li>Use pluviômetros quando disponível</li>
-              <li>Registre logo após a chuva</li>
-              <li>Seja preciso na medição</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </main>
-  );
+  )
 }

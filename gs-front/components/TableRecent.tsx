@@ -1,36 +1,49 @@
-type TableRecentProps = {
-  data: {
-    date: string;
-    location: string;
-    volume: string;
-    user: string;
-  }[];
-};
+'use client'
 
-export const TableRecent = ({ data }: TableRecentProps) => {
+import { useEffect, useState } from 'react'
+
+type RegistroChuva = {
+  id: number
+  data_ocorrencia: string
+  local: string
+  volume_mm: number
+  observacoes: string
+  usuario_id: number | null
+}
+
+export default function TableRecent() {
+  const [dados, setDados] = useState<RegistroChuva[]>([])
+
+  useEffect(() => {
+    fetch('https://controlechuva-production.up.railway.app/api/registros-chuva')
+      .then(res => res.json())
+      .then(data => setDados(data))
+      .catch(err => console.error('Erro ao buscar registros:', err))
+  }, [])
+
   return (
-    <div className="bg-[#172554] p-4 rounded-lg">
-      <h3 className="font-semibold mb-4 flex items-center gap-2">📅 Registros Recentes</h3>
+    <div className="bg-slate-800 p-4 mt-8 rounded-lg border border-slate-700">
+      <h3 className="font-semibold mb-4 text-white">📅 Registros Recentes</h3>
       <table className="w-full text-left">
         <thead>
-          <tr className="text-slate-400 text-sm">
+          <tr className="text-slate-400">
             <th>Data</th>
             <th>Local</th>
             <th>Volume</th>
             <th>Usuário</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-700">
-          {data.map((r) => (
-            <tr key={r.date} className="text-slate-300 text-sm">
-              <td>{r.date}</td>
-              <td>{r.location}</td>
-              <td className="text-blue-400">{r.volume}</td>
-              <td>{r.user}</td>
+        <tbody className="divide-y divide-slate-700 text-slate-300">
+          {dados.map((r) => (
+            <tr key={r.id}>
+              <td>{new Date(r.data_ocorrencia).toLocaleDateString('pt-BR')}</td>
+              <td>{r.local}</td>
+              <td>{r.volume_mm} mm</td>
+              <td>{r.usuario_id ?? 'Anônimo'}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
